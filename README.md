@@ -1,16 +1,16 @@
 # 📚 Grupo de Estudos - Padrões de Arquitetura
 
-Este repositório foi criado para simular um grupo de estudos focado em **Padrões de Arquitetura de Software**, com ênfase em desenvolvimento orientado a testes, design orientado a domínio e microsserviços orientados a eventos.
+Este repositório foi criado para organizar estudos colaborativos sobre arquitetura de software, padrões de design e engenharia de software, incluindo livros, artigos, repositórios, vídeos e qualquer outro conteúdo relevante.
 
 ## 🎯 Objetivo
 
-O objetivo principal é criar um espaço estruturado para estudo colaborativo de livros técnicos sobre arquitetura de software. A cada parte ou capítulo lido, extraímos pontos relevantes que norteiam nossos padrões de desenvolvimento, estruturação de software e refinamento das tarefas para implementação das necessidades do negócio.
+O objetivo principal é criar um espaço estruturado para estudo colaborativo de conteúdos relevantes sobre arquitetura de software. A cada conteúdo estudado, extraímos pontos relevantes que norteiam nossos padrões de desenvolvimento, estruturação de software e refinamento das tarefas para implementação das necessidades do negócio.
 
 ## 📖 Metodologia de Estudo
 
-Cada livro estudado possui um diretório próprio com registros estruturados de aprendizados. Os registros seguem um template padronizado que inclui:
+Cada conteúdo estudado possui um diretório próprio com registros estruturados de aprendizados. Os registros seguem um template padronizado que inclui:
 
-1. **Referência da Leitura** - Identificação da seção/capítulo estudado
+1. **Referência da Leitura** - Identificação da seção/capítulo/conteúdo estudado
 2. **Conceitos-Chave Identificados** - Principais conceitos abordados
 3. **Insights Relevantes** - Citações e reflexões importantes
 4. **Aplicações Práticas no Nosso Contexto** - Como aplicar na prática
@@ -23,51 +23,23 @@ Cada livro estudado possui um diretório próprio com registros estruturados de 
 study-group/
 ├── README.md                    # Este arquivo
 ├── template.md                  # Template para registros de aprendizado
-└── cosmic-python-book/          # Estudos do livro "Architecture Patterns with Python"
+└── [nome-do-conteudo]/         # Diretório para cada conteúdo estudado
+    ├── README.md               # Informações técnicas do conteúdo
     ├── 01-prefacio-introducao.md
     ├── 02-parte1-introducao.md
-    ├── 03-cap1-domain-modeling.md
     └── ...
 ```
 
-## 📘 Livros em Estudo
+## 📘 Conteúdos em Estudo
 
-### Architecture Patterns with Python (Cosmic Python)
+Cada conteúdo possui seu próprio diretório com um README específico contendo informações técnicas detalhadas. Consulte os diretórios abaixo para mais informações:
 
-**Autor:** Harry Percival & Bob Gregory  
-**Foco:** Test-Driven Development, Domain-Driven Design, and Event-Driven Microservices
-
-Este livro explora como construir arquiteturas robustas usando Python, aplicando princípios como:
-- **TDD (Test-Driven Development)** - Desenvolvimento guiado por testes
-- **DDD (Domain-Driven Design)** - Design orientado a domínio
-- **Event-Driven Architecture** - Arquitetura orientada a eventos
-- **Clean Architecture** - Arquitetura limpa com inversão de dependências
-
-> **Nota:** Embora o livro original esteja em inglês, os registros de estudo estão em português para facilitar a compreensão e discussão no grupo.
-
-#### Progresso dos Estudos
-
-- ✅ Prefácio e Introdução
-- ✅ Parte 1: Introdução
-- ✅ Capítulo 1: Domain Modeling
-- ✅ Capítulo 2: Repository Pattern
-- ✅ Capítulo 3: Abstractions
-- ✅ Capítulo 4: Service Layer
-- ✅ Capítulo 5: High Gear / Low Gear
-- ✅ Capítulo 6: Unit of Work
-- ✅ Capítulo 7: Aggregate
-- ✅ Parte 2: Introdução
-- ✅ Capítulo 8: Events and Message Bus
-- ✅ Capítulo 9: All Messagebus
-- ✅ Capítulo 10: Commands
-- ✅ Capítulo 11: External Events
-- ✅ Capítulo 12: CQRS
-- ✅ Capítulo 13: Dependency Injection
+- [`cosmic-python-book/`](./cosmic-python-book/) - Architecture Patterns with Python (Livro)
 
 ## 🛠️ Como Contribuir
 
 1. Leia o `template.md` para entender o formato dos registros
-2. Crie um novo arquivo seguindo a numeração sequencial
+2. Crie um novo arquivo seguindo a numeração sequencial dentro do diretório apropriado
 3. Preencha todas as seções do template com seus aprendizados
 4. Commit suas contribuições seguindo o padrão de mensagens estabelecido
 
@@ -82,31 +54,11 @@ Os arquivos seguem o padrão: `##-descricao.md`, onde:
 ### Estrutura de Commits
 
 Os commits devem seguir o padrão semântico:
-- `feat:` para novos capítulos ou seções
+- `feat:` para novos conteúdos ou seções
 - `docs:` para atualizações em documentação
 - `refactor:` para melhorias nos registros existentes
 - `fix:` para correções
 
-## 🎓 Conceitos Centrais Estudados
-
-Ao longo dos estudos, estamos focando em:
-
-- **Clean Architecture** e inversão de dependências
-- **Domain Model** como núcleo isolado da aplicação
-- **Repository Pattern** para abstração de persistência
-- **Service Layer** para definição de casos de uso
-- **Unit of Work** para operações atômicas
-- **Aggregate Pattern** para integridade de dados
-- **Event-Driven Architecture** e Message Bus
-- **CQRS (Command Query Responsibility Segregation)**
-- **Dependency Injection** e inversão de controle
-
 ## 📚 Recursos Adicionais
 
 - [Template de Registro](./template.md) - Formato padrão para documentar aprendizados
-- [Cosmic Python Book](https://www.cosmicpython.com/) - Site oficial do livro
-
----
-
-**Última atualização:** 2024
-
