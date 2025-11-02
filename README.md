@@ -25,20 +25,17 @@ Cada conteúdo estudado possui um diretório próprio com registros estruturados
 
 ## 📂 Estrutura do Repositório
 
-```
-study-group/
-├── README.md                    # Este arquivo (visão geral)
-├── template.md                  # Template para registros de aprendizado
-├── ai-docs/                     # 🎯 Base para Context Engineering & PRPs
-│   ├── rules/                   # Regras de desenvolvimento técnico
-│   ├── templates/               # Templates de contexto e PRPs
-│   └── README.md               # Framework técnico completo
-└── [nome-do-conteudo]/         # Diretório para cada conteúdo estudado
-    ├── README.md               # Informações técnicas do conteúdo
-    ├── 01-prefacio-introducao.md
-    ├── 02-parte1-introducao.md
-    └── ...
-```
+O repositório está organizado da seguinte forma:
+
+- **README.md**: Visão geral do grupo de estudos e framework de Context Engineering
+- **template.md**: Template padronizado para registros de aprendizado
+- **ai-docs/**: Base central para Context Engineering & PRPs, contendo:
+  - **rules/**: Regras de desenvolvimento técnico organizadas por temas
+  - **templates/**: Templates de contexto e Product Requirements Prompts
+  - **README.md**: Framework técnico completo de implementação
+- **[nome-do-conteudo]/**: Diretórios dedicados para cada conteúdo estudado, cada um contendo:
+  - **README.md**: Informações técnicas específicas do conteúdo
+  - Arquivos numerados sequencialmente com registros de aprendizado detalhados
 
 ## 📘 Conteúdos em Estudo & Framework de Context Engineering
 
@@ -68,11 +65,11 @@ Todo o conhecimento é consolidado em [`ai-docs/`](./ai-docs/) com:
 - **Métricas de validação** técnica e critérios de qualidade
 
 ### Conteúdos Técnicos Estudados
-- [`cosmic-python-book/`](./cosmic-python-book/) - Architecture Patterns with Python (Livro)
-- [`context-engineering-product-requirements-prompts/`](./context-engineering-product-requirements-prompts/) - Engenharia de Contexto & PRPs
-- [`the-hexagonal-architecture/`](./the-hexagonal-architecture/) - Arquitetura Hexagonal (Ports & Adapters)
-- [`design-principles-and-design-patterns/`](./design-principles-and-design-patterns/) - Princípios SOLID & Padrões de Design
-- [`refactoring-improving-the-design-of-existing-code-book/`](./refactoring-improving-the-design-of-existing-code-book/) - Refatoração & Qualidade de Código
+- **Architecture Patterns with Python** - Estudos sobre padrões arquiteturais em Python
+- **Engenharia de Contexto & PRPs** - Estudos sobre Context Engineering e Product Requirements Prompts
+- **Arquitetura Hexagonal** - Estudos sobre Arquitetura Hexagonal (Ports & Adapters)
+- **Princípios SOLID & Padrões de Design** - Estudos sobre princípios de design e padrões
+- **Refatoração & Qualidade de Código** - Estudos sobre técnicas de refatoração e qualidade
 
 ### Framework de Implementação
 - [`ai-docs/`](./ai-docs/) - 🎯 **Base completa para Context Engineering**

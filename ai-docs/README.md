@@ -79,46 +79,29 @@ Este repositório organiza o conhecimento coletivo sobre engenharia de contexto 
 
 ### Estrutura de Diretórios Técnicos
 
-```
-ai-docs/
-├── rules/                      # Regras de desenvolvimento técnico
-│   ├── architecture-solid-principles.md    # Princípios SOLID e arquitetura
-│   ├── naming-conventions-style.md         # Convenções de nomenclatura
-│   ├── project-structure.md               # Estrutura de projetos
-│   ├── refactoring-practices.md            # Práticas de refatoração
-│   ├── testing-quality.md                  # Qualidade e testes
-│   └── trae IDE/                          # Regras específicas Trae IDE
-│       └── python_project_rules.md         # Regras Python backend
-├── templates/                   # Templates de contexto técnico
-│   ├── context/                # Context stacks técnicos
-│   │   ├── base-context-stack.md           # Context stack base
-│   │   ├── iterative-refinement.md         # Refinamento iterativo
-│   │   ├── metrics-dashboard.md            # Dashboard de métricas
-│   │   └── validation-checklist.md         # Checklist de validação
-│   └── prp/                    # PRPs técnicos
-│       ├── prp-analysis.md                 # Análise técnica PRP
-│       ├── prp-backend.md                  # PRP backend específico
-│       ├── prp-base.md                     # PRP base
-│       └── prp-frontend.md                 # PRP frontend específico
-└── README.md                   # Este documento
-```
+O diretório `ai-docs/` está organizado em três categorias principais:
+
+- **rules/**: Contém regras de desenvolvimento técnico organizadas por temas como princípios arquiteturais, convenções de nomenclatura, estrutura de projetos, práticas de refatoração, qualidade e testes, além de regras específicas para diferentes ambientes de desenvolvimento
+- **templates/context/**: Inclui templates de context stacks técnicos para diferentes cenários de desenvolvimento, incluindo templates base, de refinamento iterativo, dashboard de métricas e checklist de validação
+- **templates/prp/**: Contém Product Requirements Prompts técnicos para diferentes tipos de desenvolvimento, incluindo análise técnica, backend, frontend e templates base
+- **README.md**: Documentação principal do framework
 
 ### Fluxo de Trabalho Técnico na IDE
 
 #### 1. Context Stack Selection
 - **Selecionar contexto apropriado** baseado no tipo de tarefa
 - **Exemplo:** `Backend API Development` → Usar context stack de backend
-- **Ferramenta:** Templates em `templates/context/`
+- **Ferramenta:** Templates na pasta `templates/context/`
 
 #### 2. PRP Creation
 - **Criar PRP técnico** com requisitos específicos
 - **Exemplo:** `Create user authentication service with JWT tokens`
-- **Ferramenta:** Templates em `templates/prp/`
+- **Ferramenta:** Templates na pasta `templates/prp/`
 
 #### 3. Rule Application  
 - **Aplicar regras de desenvolvimento** relevantes
-- **Exemplo:** Seguir `python_project_rules.md` para estrutura Python
-- **Ferramenta:** Regras em `rules/` directory
+- **Exemplo:** Seguir regras específicas para estrutura Python
+- **Ferramenta:** Regras na pasta `rules/`
 
 #### 4. Validation & Execution
 - **Validar contexto** com checklist técnico
@@ -190,23 +173,23 @@ ai-docs/
 ## 📖 Integração com Estudos Existentes
 
 ### Context Engineering & PRPs
-- **Base Teórica**: `/context-engineering-product-requirements-prompts/`
-- **Aplicação Prática**: Templates em `templates/context/` e `templates/prp/`
-- **Métricas**: Framework de métricas técnico baseado em `08-pitfalls-e-metricas-de-sucesso.md`
+- **Base Teórica**: Conteúdos sobre Engenharia de Contexto e PRPs
+- **Aplicação Prática**: Templates de contexto e PRPs técnicos
+- **Métricas**: Framework de métricas técnico baseado em estudos de pitfalls e métricas de sucesso
 
 ### Arquitetura Hexagonal  
-- **Base Teórica**: `/the-hexagonal-architecture/README.md`
-- **Aplicação Prática**: Regras de arquitetura em `rules/architecture-solid-principles.md`
+- **Base Teórica**: Conteúdos sobre Arquitetura Hexagonal
+- **Aplicação Prática**: Regras de arquitetura e princípios SOLID
 - **Implementação**: Padrões de ports and adapters em projetos Python
 
 ### Design Principles & Patterns
-- **Base Teórica**: `/design-principles-and-design-patterns/`
-- **Aplicação Prática**: Regras de design em várias `rules/` files
-- **Implementação**: Aplicação de SOLID principles e padrões de projeto
+- **Base Teórica**: Conteúdos sobre Princípios de Design e Padrões
+- **Aplicação Prática**: Regras de design em diversos arquivos
+- **Implementação**: Aplicação de princípios SOLID e padrões de projeto
 
 ### Refactoring & Quality
-- **Base Teórica**: `/refactoring-improving-the-design-of-existing-code-book/`
-- **Aplicação Prática**: Regras em `rules/refactoring-practices.md` e `rules/testing-quality.md`
+- **Base Teórica**: Conteúdos sobre Refatoração e Qualidade
+- **Aplicação Prática**: Regras de refatoração e garantia de qualidade
 - **Implementação**: Processos de refatoração e garantia de qualidade
 
 ## 📈 Próximos Passos Técnicos
@@ -221,11 +204,11 @@ ai-docs/
 ## 🔗 Referências Técnicas
 
 ### Estudos Internos
-- **Context Engineering**: `/context-engineering-product-requirements-prompts/`
-- **Hexagonal Architecture**: `/the-hexagonal-architecture/README.md`
-- **Design Principles**: `/design-principles-and-design-patterns/`
-- **Refactoring**: `/refactoring-improving-the-design-of-existing-code-book/`
-- **Cosmic Python**: `/cosmic-python-book/`
+- **Context Engineering**: Estudos sobre Engenharia de Contexto e PRPs
+- **Hexagonal Architecture**: Estudos sobre Arquitetura Hexagonal
+- **Design Principles**: Estudos sobre Princípios de Design e Padrões
+- **Refactoring**: Estudos sobre Refatoração e Qualidade de Código
+- **Cosmic Python**: Estudos sobre Architecture Patterns with Python
 
 ### Referências Externas
 - **Context Engineering**: "Context Engineering (1/2)—Getting the best out of Agentic AI Systems" - A B Vijay Kumar
