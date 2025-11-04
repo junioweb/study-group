@@ -1,106 +1,92 @@
-# 📚 Grupo de Estudos - Engenharia de Contexto & Arquitetura de Software
+# 🧠 Context Engineering & Product Requirements Prompts (PRPs) Framework
 
-Este repositório foi criado para organizar estudos colaborativos sobre arquitetura de software, padrões de design, engenharia de contexto e desenvolvimento com IA agentic. Todo o material gerado serve como base fundamental para aplicar **Context Engineering** com **Product Requirements Prompts (PRPs)** no desenvolvimento com sistemas de IA.
+**A systematic approach to transforming AI from an unpredictable tool into a reliable development partner through structured context engineering and actionable prompts.**
 
-## 🎯 Objetivo
+## 🎯 Why This Project Exists
 
-O objetivo principal é criar um espaço estruturado para estudo colaborativo que serve como base de conhecimento para **Context Engineering**. A cada conteúdo estudado, extraímos pontos relevantes que são transformados em:
-- **Regras de desenvolvimento** técnico
-- **Templates de contexto** reutilizáveis  
-- **Product Requirements Prompts** específicos
-- **Padrões arquiteturais** validados
+Modern software development with AI systems often suffers from inconsistent, unpredictable results. Developers struggle with:
+- Unreliable AI outputs that require constant manual correction
+- Inconsistent code quality across different AI sessions
+- Difficulty reproducing successful AI-assisted outcomes
+- Lack of structured approaches to communicate with AI systems effectively
 
-Todo este conhecimento é consolidado no diretório [`ai-docs/`](./ai-docs/) para implementação prática com IA agentic.
+This repository addresses these challenges by implementing **Context Engineering** principles and **Product Requirements Prompts (PRPs)** to create predictable, high-quality AI-assisted development workflows.
 
-## 📖 Metodologia de Estudo
+## 🔬 How It Works - The Knowledge-to-Implementation Pipeline
 
-Cada conteúdo estudado possui um diretório próprio com registros estruturados de aprendizados. Os registros seguem um template padronizado que inclui:
+This project follows a systematic approach to convert learning into practical AI development tools:
 
-1. **Referência da Leitura** - Identificação da seção/capítulo/conteúdo estudado
-2. **Conceitos-Chave Identificados** - Principais conceitos abordados
-3. **Insights Relevantes** - Citações e reflexões importantes
-4. **Aplicações Práticas no Nosso Contexto** - Como aplicar na prática
-5. **Decisões de Design ou Padrões a Adotar** - Regras e convenções
-6. **Dúvidas ou Pontos a Aprofundar** - Questões para discussão
+### 1. **Knowledge Acquisition** (`knowledge-base/`)
+- Systematic study of technical literature (architecture patterns, design principles, refactoring, etc.)
+- Structured learning records following a standardized template
+- Extraction of key insights, principles, and practical applications
 
-## 📂 Estrutura do Repositório
+### 2. **Knowledge Organization** (`knowledge-base/`)
+- Content organized by domain (context-engineering, software-engineering, digital-marketing)
+- Each piece of learning follows a consistent structure:
+  - Key concepts identification
+  - Relevant insights and quotes
+  - Practical applications to our context
+  - Design decisions and patterns to adopt
+  - Outstanding questions for future exploration
 
-O repositório está organizado da seguinte forma:
+### 3. **Practical Implementation** (`ai-docs/`)
+- Knowledge transformed into **actionable tools** for AI interaction:
+  - **Rules**: Technical development standards and best practices
+  - **Templates**: Reusable context stack structures for different scenarios
+  - **PRPs**: Product Requirements Prompts for specific development tasks
+  - **Validation frameworks**: Quality checks and success metrics
 
-- **README.md**: Visão geral do grupo de estudos e framework de Context Engineering
-- **template.md**: Template padronizado para registros de aprendizado
-- **ai-docs/**: Base central para Context Engineering & PRPs, contendo:
-  - **rules/**: Regras de desenvolvimento técnico organizadas por temas
-  - **templates/**: Templates de contexto e Product Requirements Prompts
-  - **README.md**: Framework técnico completo de implementação
-- **[nome-do-conteudo]/**: Diretórios dedicados para cada conteúdo estudado, cada um contendo:
-  - **README.md**: Informações técnicas específicas do conteúdo
-  - Arquivos numerados sequencialmente com registros de aprendizado detalhados
+## 🏗️ The Context Engineering Framework
 
-## 📘 Conteúdos em Estudo & Framework de Context Engineering
+### **Context Stack Architecture** (5-Layer System)
+1. **System Context**: AI role definition, behavioral constraints, and ethical boundaries
+2. **Domain Context**: Specialized technical knowledge and industry standards
+3. **Task Context**: Specific requirements, success criteria, and performance expectations
+4. **Interaction Context**: Communication style, feedback protocols, and error handling
+5. **Response Context**: Output structure, format requirements, and deliverable specifications
 
-Cada conteúdo estudado possui seu próprio diretório com um README específico contendo informações técnicas detalhadas. Todo este conhecimento é transformado em **regras, templates e PRPs** no diretório [`ai-docs/`](./ai-docs/) para implementação prática com IA agentic.
+### **Product Requirements Prompts (PRPs)**
+- **One-Pass Implementation Goal**: Achieve successful development outcomes in a single AI session
+- **Comprehensive Context Package**: Business requirements + technical knowledge + execution guidelines
+- **Measurable Outcomes**: Clear validation criteria and quality standards
 
-## 🎯 Context Engineering & Product Requirements Prompts
+## 📁 Repository Structure
 
-Este repositório simula um grupo de estudos onde todo o material gerado serve como **base fundamental para Context Engineering**. Através do estudo sistemático de arquitetura e padrões de software, construímos:
+```
+study-group/
+├── knowledge-base/           # Raw learning and research content
+│   ├── context-engineering/  # Context Engineering principles and applications
+│   ├── software-engineering/ # Architecture, design patterns, refactoring
+│   ├── digital-professional-marketing/ # Domain-specific applications
+│   └── template.md           # Standardized learning record template
+└── ai-docs/                  # Processed knowledge as AI tools
+    ├── rules/                # Technical development rules and standards
+    ├── templates/            # Context and PRP templates
+    ├── context/              # Context stack examples
+    └── prp/                  # Product Requirements Prompts
+```
 
-### 🏗️ Context Stack Engineering
-- **System Context**: Personalidade e limites da IA para desenvolvimento técnico
-- **Domain Context**: Conhecimento especializado em arquitetura e padrões
-- **Task Context**: Especificações técnicas com critérios de sucesso claros
-- **Interaction Context**: Fluxos de conversa e estilo de interação técnica
-- **Response Context**: Estruturação e formatação de saídas técnicas
+## 🚀 Practical Application
 
-### 📋 Product Requirements Prompts (PRPs)
-- **PRPs Técnicos**: "Pacotes mínimos viáveis" para entrega de código de produção
-- **Base em Conhecimento**: Combinação de PRDs técnicos + inteligência curada dos estudos
-- **Objetivo**: **Sucesso em uma única passagem** - evitar retrabalho e interpretações erradas
+The knowledge flow transforms as follows:
+1. **Study** → Technical literature and research
+2. **Extract** → Key concepts, patterns, and insights
+3. **Organize** → Structured learning records in `knowledge-base/`
+4. **Transform** → Convert knowledge into practical tools in `ai-docs/`
+5. **Apply** → Use PRPs and templates to guide AI-assisted development
 
-### 📊 Framework de Implementação
-Todo o conhecimento é consolidado em [`ai-docs/`](./ai-docs/) com:
-- **Regras de desenvolvimento** baseadas nos princípios estudados
-- **Templates de contexto** reutilizáveis para diferentes cenários
-- **PRPs específicos** para arquitetura, padrões e qualidade
-- **Métricas de validação** técnica e critérios de qualidade
+### Example Workflow:
+1. Study a design pattern (e.g., Repository Pattern) → Create learning record in `knowledge-base/software-engineering/cosmic-python-book/`
+2. Extract key principles and best practices → Transform into rules in `ai-docs/software-engineering/rules/`
+3. Create template for applying this pattern → Store in `ai-docs/software-engineering/templates/`
+4. Build PRP for implementing the pattern → Save in `ai-docs/software-engineering/prp/`
+5. Use PRP to guide AI in creating production-ready code
 
-### Conteúdos Técnicos Estudados
-- **Architecture Patterns with Python** - Estudos sobre padrões arquiteturais em Python
-- **Engenharia de Contexto & PRPs** - Estudos sobre Context Engineering e Product Requirements Prompts
-- **Arquitetura Hexagonal** - Estudos sobre Arquitetura Hexagonal (Ports & Adapters)
-- **Princípios SOLID & Padrões de Design** - Estudos sobre princípios de design e padrões
-- **Refatoração & Qualidade de Código** - Estudos sobre técnicas de refatoração e qualidade
+## 📊 Measuring Success
 
-### Framework de Implementação
-- [`ai-docs/`](./ai-docs/) - 🎯 **Base completa para Context Engineering**
-  - **Regras de desenvolvimento** técnico consolidadas
-  - **Templates de contexto** para diferentes cenários
-  - **Product Requirements Prompts** específicos
-  - **Métricas de qualidade** e validação técnica
-
-## 🛠️ Como Contribuir
-
-1. Leia o `template.md` para entender o formato dos registros
-2. Crie um novo arquivo seguindo a numeração sequencial dentro do diretório apropriado
-3. Preencha todas as seções do template com seus aprendizados
-4. Commit suas contribuições seguindo o padrão de mensagens estabelecido
-
-## 📝 Padrões e Convenções
-
-### Nomenclatura de Arquivos
-
-Os arquivos seguem o padrão: `##-descricao.md`, onde:
-- `##` é um número sequencial de dois dígitos
-- `descricao` é uma descrição curta do conteúdo (em kebab-case)
-
-### Estrutura de Commits
-
-Os commits devem seguir o padrão semântico:
-- `feat:` para novos conteúdos ou seções
-- `docs:` para atualizações em documentação
-- `refactor:` para melhorias nos registros existentes
-- `fix:` para correções
-
-## 📚 Recursos Adicionais
-
-- [Template de Registro](./template.md) - Formato padrão para documentar aprendizados
+The effectiveness of this framework is measured by:
+- **Consistency**: AI produces similar high-quality results across different sessions
+- **Efficiency**: Reduced iteration cycles and rework
+- **Predictability**: Reliable achievement of desired development outcomes
+- **Quality**: Code that meets architectural and engineering standards without manual intervention

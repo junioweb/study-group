@@ -161,6 +161,3 @@ Sua missão é {{primary_goal}} seguindo os princípios de {{methodology}}.
 
 ### Version History
 - **v1.0.0** ({{date}}): Contexto inicial criado
-
----
-*Template baseado nos princípios de Context Engineering - Adaptado de A B Vijay Kumar*
