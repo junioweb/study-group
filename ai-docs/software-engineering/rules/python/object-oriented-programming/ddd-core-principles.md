@@ -1,96 +1,74 @@
 ## Purpose
-Establish foundational Domain-Driven Design principles for Python projects. Ensures domain model purity and proper separation of concerns.
+Establish foundational Domain-Driven Design principles for Python backend systems with strict domain model purity and separation of concerns.
 
-### 1. Domain Model Purity
-- **NO infrastructure dependencies** in domain layer:
-  ```python
-  # BAD: Domain model importing database libraries
-  from sqlalchemy import Column, String  # ❌ Never in domain/
-  
-  # GOOD: Domain model completely isolated
-  @dataclass(frozen=True)
-  class OrderLine:
-      orderid: str
-      sku: str
-      qty: int
-  ```
-- **All business rules** must live in domain entities/value objects, not in services or controllers
-- **Domain exceptions** must be specific to business context:
-  ```python
-  class OutOfStock(DomainException): ...
-  class InvalidSku(DomainException): ...
-  ```
+## Guidelines
+Domain layer must be completely isolated from infrastructure:
+```python
+# GOOD: Pure domain model with no external dependencies
+@dataclass(frozen=True)
+class OrderLine:
+    orderid: str
+    sku: str
+    qty: int
+    
+    def __post_init__(self):
+        if self.qty <= 0:
+            raise ValueError("Quantity must be positive")
 
-### 2. Entity & Value Object Rules
-- **Entities** must:
-  - Have explicit identity (UUID preferred)
-  - Encapsulate state-changing logic (no public setters)
-  - Implement proper equality based on identity
-  ```python
-  class Batch:
-      def __init__(self, ref: str, sku: str, qty: int):
-          self.reference = ref
-          self.sku = sku
-          self._purchased_quantity = qty
-          self._allocations = set()
-      
-      def allocate(self, line: OrderLine):
-          if self.can_allocate(line):
-              self._allocations.add(line)
-  ```
-- **Value Objects** must:
-  - Be immutable (`@dataclass(frozen=True)`)
-  - Implement structural equality
-  - Validate in constructor
-  ```python
-  @dataclass(frozen=True)
-  class Money:
-      amount: Decimal
-      currency: str
-      
-      def __post_init__(self):
-          if self.amount < 0:
-              raise ValueError("Money cannot be negative")
-  ```
 
-### 3. Layered Architecture Enforcement
-| Layer | Responsibilities | Dependencies Allowed |
-|-------|------------------|----------------------|
-| **domain/** | Entities, value objects, domain services, exceptions | None (pure Python) |
-| **application/** | Use cases, service layer, DTOs | domain/ only |
-| **infrastructure/** | Database, APIs, external services | domain/, application/ |
-| **interfaces/** | API routes, CLI commands, UI handlers | application/, infrastructure/ |
+# BAD: Domain importing infrastructure packages
+from sqlalchemy import Column, String  # ❌ Forbidden in domain/
+```
 
-- **Dependency flow must be unidirectional**: interfaces → infrastructure → application → domain
-- **NO circular dependencies** between layers
+Business rules must reside in domain objects, not services:
+```python
+class Batch:
+    def __init__(self, ref: str, sku: str, qty: int, eta: Optional[date] = None):
+        self.reference = ref
+        self.sku = sku
+        self.eta = eta
+        self._purchased_quantity = qty
+        self._allocations = set()
+    
+    def allocate(self, line: OrderLine) -> bool:
+        if self.can_allocate(line):
+            self._allocations.add(line)
+            return True
+        return False
+    
+    def can_allocate(self, line: OrderLine) -> bool:
+        return self.sku == line.sku and self.available_quantity >= line.qty
+```
 
-### 4. Domain Service & Function Rules
-- **Domain services** must be stateless functions when possible:
-  ```python
-  # GOOD: Stateless domain function
-  def allocate(line: OrderLine, batches: List[Batch]) -> str:
-      ...
-  ```
-- **Services must not contain infrastructure concerns** (logging, HTTP calls, DB access)
-- **Prefer functions over classes** for domain services without identity
+Domain exceptions must be specific and contextual:
+```python
+class OutOfStock(DomainException):
+    def __init__(self, sku: str):
+        self.sku = sku
+        super().__init__(f"Out of stock for sku {sku}")
 
-### 5. Anti-Patterns Explicitly Blocked
-- **Anemic Domain Model**: Entities with only getters/setters and no behavior
-- **Leaky Abstractions**: Domain objects exposing internal state for infrastructure to manipulate
-- **God Objects**: Classes with multiple responsibilities violating SRP
-- **Primitive Obsession**: Using raw strings/ints instead of value objects
-- **Service Locator**: Hidden dependencies making code untestable
 
-### 6. Testing Requirements
-- **Domain layer must be 100% testable without infrastructure**
-- **Unit tests must pass with zero external dependencies**
-- **Test domain behavior, not implementation details**:
-  ```python
-  def test_allocating_to_a_batch_reduces_available_quantity():
-      batch = Batch("b1", "SMALL-TABLE", qty=20, eta=date.today())
-      line = OrderLine("o1", "SMALL-TABLE", 2)
-      
-      batch.allocate(line)
-      
-      assert batch.available_quantity == 18
-  ```
+class InvalidOrderState(DomainException):
+    def __init__(self, order_id: str, current_state: str, attempted_action: str):
+        super().__init__(
+            f"Order {order_id} in state {current_state} cannot perform {attempted_action}"
+        )
+```
+
+## Layered architecture enforcement:
+| Layer           | Responsibilities                          | Dependencies Allowed       |
+|-----------------|--------------------------------------------|----------------------------|
+| domain/         | Entities, value objects, domain services   | None (pure Python)         |
+| application/    | Use cases, DTOs, ports (interfaces)        | domain/ only               |
+| infrastructure/ | Database, APIs, external services          | domain/, application/      |
+| interfaces/     | API endpoints, CLI commands, event handlers| application/, infrastructure|
+
+Dependency flow must be strictly unidirectional: interfaces → infrastructure → application → domain
+
+## Anti-Patterns
+❌ Anemic Domain Model (entities with only getters/setters)
+❌ Primitive Obsession (using raw strings/ints instead of value objects)
+❌ Domain objects with infrastructure concerns (`.save()` methods on entities)
+❌ Leaky abstractions (domain objects exposing internal state)
+❌ God objects (classes with multiple responsibilities violating SRP)
+❌ Circular dependencies between layers
