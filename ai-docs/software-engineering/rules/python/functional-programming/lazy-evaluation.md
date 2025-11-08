@@ -1,75 +1,88 @@
-## **Rule: Lazy Evaluation for Large Datasets**  
-**ID:** `PY-FP-LAZY-006`  
-**Scope:** Batch data processing (`src/batch_processing/`).  
-**Quality Criterion:** Memory efficiency and on-demand processing.  
+## Rule: Lazy Evaluation for Resource Efficiency
+ID: `PY-FP-LAZY-001`
+Scope: Data processing pipelines and large dataset handling (`src/services/`, `src/batch_processing/`)
+Quality Criterion: Memory efficiency and on-demand computation.
 
-### **Action:**  
-- Use generators (`yield`) for data stream processing  
-- Implement `itertools` for operations on large collections  
-- Avoid `list()` in intermediate transformations  
-- Utilize `more_itertools` for advanced generator operations  
+### Core Principle
+"Process data streams incrementally to minimize memory footprint and enable early termination."
+(Complements testing-strategy.md for performance validation)
 
-### **Violation Example:**  
+### Action:
+Use generators for streaming data processing:
+- Prefer `yield` over returning lists for sequential data
+- Use `Iterator`, `Generator`, or `Iterable` type hints for stream boundaries
+- Implement processing pipelines with `toolz.pipe` or custom composition
+- Materialize collections only at endpoints (e.g., before returning to caller)
+
+### Optimize with standard library tools:
+- Use `itertools` for transformations on large collections
+- Leverage `more_itertools` for advanced generator operations when appropriate
+- Employ `heapq` and other memory-efficient algorithms for sorted data
+
+### Avoid these performance pitfalls:
+- Calling `list()` on generators in intermediate steps
+- Loading entire datasets into memory before processing
+- Creating multiple intermediate collections in transformation chains
+
+### Implementation patterns:
 ```python
-# ❌ Bad - Loads everything into memory
-def process_logs(log_file_path: str) -> List[LogEntry]:
-    with open(log_file_path) as f:
-        lines = f.readlines()  # Loads entire file into memory
-        cleaned = [clean_line(line) for line in lines]  # Intermediate list
-        parsed = [parse_log(line) for line in cleaned]  # Another intermediate list
-        filtered = [log for log in parsed if log.level == "ERROR"]  # Yet another list
-    return filtered
-```
+from typing import Generator, Iterator, TypeVar
+from toolz import pipe
 
-### **Correct Example:**  
-```python
-# ✅ Good - Lazy processing with generators
-from typing import Generator, Iterator
+T = TypeVar('T')
 
-def read_logs(file_path: str) -> Generator[str, None, None]:
-    """Reads file line by line without loading everything into memory"""
+def read_lines(file_path: str) -> Generator[str, None, None]:
+    """Memory-efficient file reading"""
     with open(file_path) as f:
         for line in f:
-            yield line
+            yield line.rstrip('\n')
 
-def clean_logs(lines: Iterator[str]) -> Generator[str, None, None]:
-    for line in lines:
-        yield clean_line(line)
-
-def parse_logs(lines: Iterator[str]) -> Generator[LogEntry, None, None]:
-    for line in lines:
-        yield parse_log(line)
-
-def filter_errors(entries: Iterator[LogEntry]) -> Iterator[LogEntry]:
-    return (entry for entry in entries if entry.level == "ERROR")
-
-def process_logs_lazy(log_file_path: str) -> List[LogEntry]:
-    """Lazy pipeline - only processes what's needed"""
-    pipeline = pipe(
-        log_file_path,
-        read_logs,
-        clean_logs,
-        parse_logs,
-        filter_errors,
-        list  # Materializes only at the end
+def transform_data(lines: Iterator[str]) -> Iterator[ProcessedRecord]:
+    """Chain transformations without intermediate collections"""
+    return (
+        parse_record(clean_line(line))
+        for line in lines
+        if is_valid_line(line)
     )
-    return pipeline
+
+def process_large_dataset(file_path: str) -> List[ProcessedRecord]:
+    """Materialize only at endpoint"""
+    return pipe(
+        file_path,
+        read_lines,
+        transform_data,
+        list  # Only materialization point
+    )
 ```
 
-### **Verification:**  
+### Verification:
 ```python
-# Test with simulated large file
+# Memory usage test
 def test_memory_efficiency():
-    # Simulates 1GB file with 10 million lines
-    large_file = generate_test_file(lines=10_000_000)
-    
-    # Checks memory usage during processing
+    # Simulate large dataset processing
     import tracemalloc
     tracemalloc.start()
     
-    result = process_logs_lazy(large_file)
+    # Process 1M records without materializing intermediates
+    result = process_large_dataset("test_data.csv")
     
     current, peak = tracemalloc.get_traced_memory()
-    assert peak < 100 * 1024 * 1024  # Less than 100MB peak
+    assert peak < 50 * 1024 * 1024  # Less than 50MB peak memory
+    assert len(result) == 1000  # Expected output size
     tracemalloc.stop()
+
+# Early termination test
+def test_early_termination():
+    # Verify pipeline stops after finding first match
+    items = (x for x in range(1000000))  # Large generator
+    result = next((x for x in items if x > 10), None)
+    # Should not process all million items
+    assert result == 11
 ```
+
+### Anti-Patterns
+❌ `data = [process(x) for x in load_all_data()]` - Processing after full load
+❌ Converting generators to lists before filtering: `list(filter(pred, gen))`
+❌ Using pandas/DataFrames for simple transformations that could be streams
+❌ Loading entire JSON/XML files into memory instead of streaming parsers
+❌ Processing files line-by-line but storing all results before returning

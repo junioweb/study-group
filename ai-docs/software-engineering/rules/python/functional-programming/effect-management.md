@@ -1,77 +1,68 @@
-## **Rule: Effect Management with Explicit Types**  
-**ID:** `PY-FP-EFFECTS-004`  
-**Scope:** I/O and external integration modules (`src/adapters/`).  
-**Quality Criterion:** Clear separation between pure logic and side effects.  
+## Rule: Effect Isolation at System Boundaries
+ID: `PY-FP-EFFECTS-001`
+Scope: All adapter modules and shell functions (`src/adapters/`, `src/app/`)
+Quality Criterion: Side effects are explicit, testable, and contained.
 
-### **Action:**  
-- Use `returns.Result` for operations that may fail  
-- Isolate I/O in functions with `_io` or `_external` suffix  
-- Core business logic must receive ready data, not I/O dependencies  
-- Use `dependency_injector` for external service dependency injection  
+### Core Principle
+"Push all side effects to the edges of the system. The functional core should remain pure and deterministic."
+(Complements functional-code-imperative-shell.md)
 
-### **Violation Example:**  
+### Action:
+Explicitly identify and isolate effectful operations:
+- Mark effectful functions with suffix `_effect`, `_with_io`, or `_cmd`
+- Use type hints to indicate effects: `Callable[..., IO[A]]`, `Callable[..., Task[A]]`
+- Create dedicated effect handlers for common operations (database, http, filesystem)
+- Separate effect execution from effect definition
+
+### Never allow in functional core:
+- Direct database calls, HTTP requests, or file operations
+- Random number generation without explicit seed parameter
+- Current time usage without explicit time provider parameter
+- Global state modification or access
+
+Implementation patterns:
 ```python
-# ❌ Bad - Business logic mixed with I/O
-def process_payment(user_id, amount):
-    user = database.get_user(user_id)  # Side effect
-    if user.balance < amount:
-        raise InsufficientFunds()
-    payment_gateway.charge(user.card, amount)  # External effect
-    user.balance -= amount  # Mutation
-    database.save_user(user)  # Side effect
-    return Transaction(id=generate_id(), amount=amount)
+# 1. Effect definition (pure)
+def create_user_effect(user_data: UserData) -> IO[User]:
+    """Defines the effect without executing it"""
+    return IO(lambda: database.insert("users", user_data))
+
+# 2. Effect handler (imperative shell)
+def execute_io(io_effect: IO[A], config: AppConfig) -> A:
+    """Executes effects with proper error handling and logging"""
+    try:
+        return io_effect.run()
+    except DatabaseError as e:
+        logger.error(f"Database operation failed: {e}")
+        raise UserCreationError(f"Failed to create user: {str(e)}")
+
+# 3. Time dependency injection
+def generate_report_effect(users: List[User], now: Callable[[], datetime]) -> str:
+    """Time dependency explicitly injected"""
+    timestamp = now().isoformat()
+    return f"Report generated at {timestamp} for {len(users)} users"
 ```
 
-### **Correct Example:**  
+Verification:
 ```python
-# ✅ Good - Clear separation with Result and explicit dependencies
-from returns.result import Result, Success, Failure
+# Test effect definition without execution
+def test_user_creation_effect_definition():
+    user_data = UserData(name="Alice", email="alice@example.com")
+    effect = create_user_effect(user_data)
+    assert isinstance(effect, IO)  # Verify effect type without execution
 
-# Pure core - no external dependencies
-def validate_payment(user: User, amount: float) -> Result[Transaction, str]:
-    if user.balance < amount:
-        return Failure("Insufficient funds")
-    return Success(Transaction(
-        id=generate_id(), 
-        amount=amount,
-        new_balance=user.balance - amount
-    ))
-
-# Adapter layer with effects
-def process_payment_io(
-    user_id: str, 
-    amount: float,
-    user_repo,  # Abstraction for persistence
-    payment_client  # Abstraction for gateway
-) -> Result[dict, str]:
-    user_result = user_repo.get_by_id(user_id)
-    if isinstance(user_result, Failure):
-        return user_result
+# Test effect handler with mocked dependencies
+def test_execute_io_with_failure():
+    failing_effect = IO(lambda: raise DatabaseError("connection failed"))
+    config = AppConfig(db_url="test")
     
-    validation = validate_payment(user_result.unwrap(), amount)
-    if isinstance(validation, Failure):
-        return validation
-    
-    transaction = validation.unwrap()
-    charge_result = payment_client.charge(transaction.amount)
-    
-    if isinstance(charge_result, Success):
-        updated_user = user_result.unwrap().with_balance(transaction.new_balance)
-        user_repo.save(updated_user)
-        return Success(transaction.to_dict())
-    
-    return Failure(f"Payment failed: {charge_result.failure()}")
+    with pytest.raises(UserCreationError):
+        execute_io(failing_effect, config)
 ```
 
-### **Verification:**  
-```python
-# Test of pure core without complex mocks
-def test_validate_payment():
-    user = User(balance=100.0)
-    result1 = validate_payment(user, 50.0)
-    assert isinstance(result1, Success)
-    
-    result2 = validate_payment(user, 150.0)
-    assert isinstance(result2, Failure)
-    assert "Insufficient funds" in result2.failure()
-```
+### Anti-Patterns
+❌ Calling database directly from business logic functions
+❌ Using datetime.now() directly in core calculations
+❌ "Hidden" effects where function name doesn't indicate I/O
+❌ Effect handling scattered throughout code instead of dedicated modules
+❌ Testing core logic by mocking database calls (should test against pure functions)
